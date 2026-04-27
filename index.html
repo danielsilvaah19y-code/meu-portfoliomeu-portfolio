@@ -3,188 +3,201 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>📺 NIEL IPTV - FILMES/SÉRIES EM CARTAZ AGORA!</title>
+    <title>📺 NIEL IPTV GRÁTIS - Filmes e Séries</title>
     <style>
-        *{margin:0;padding:0;box-sizing:border-box}body{background:linear-gradient(135deg,#000 0%,#1a0a2e 50%,#0a0a15 100%);color:#fff;font-family:'Segoe UI',sans-serif;overflow-x:hidden}
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{background:linear-gradient(135deg,#000 0%,#1a0a2e 50%,#0a0a15 100%);color:#fff;font-family:'Segoe UI',sans-serif;overflow-x:hidden}
+        
         .header{background:linear-gradient(90deg,#e50914,#00d4ff,#ff6b35);padding:30px;text-align:center;box-shadow:0 15px 60px rgba(229,9,20,.8);position:relative;overflow:hidden}
         .header::before{content:'';position:absolute;top:0;left:-100%;width:200%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.4),transparent);animation:shine 3s infinite}
         @keyframes shine{0%{left:-100%}100%{left:100%}}
-        .logo{font-size:4em;margin-bottom:15px;text-shadow:0 0 40px #fff;animation:pulse 2s infinite}@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+        
+        .logo{font-size:4em;margin-bottom:15px;text-shadow:0 0 40px #fff;animation:pulse 2s infinite}
+        @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+        
         .subtitle{font-size:1.4em;opacity:.95;font-weight:600}
+        
         .player-container{width:98%;max-width:1400px;margin:25px auto;background:#111;border:4px solid #e50914;border-radius:25px;overflow:hidden;box-shadow:0 20px 60px rgba(229,9,20,.6);aspect-ratio:16/9;position:relative}
         iframe{width:100%;height:100%;border:none}
-        .now-playing{position:absolute;top:10px;left:10px;background:rgba(0,0,0,.8);padding:10px 15px;border-radius:15px;font-size:14px;font-weight:700;border:2px solid #00d4ff;max-width:300px}
-        .section{max-width:1400px;margin:40px auto;padding:0 20px}
-        .section-title{text-align:center;margin:40px 0 25px;background:linear-gradient(90deg,#e50914,#00d4ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:2.5em;font-weight:700;text-shadow:2px 2px 10px #000;position:relative}
+        
+        .now-playing{position:absolute;top:10px;left:10px;background:rgba(0,0,0,.8);padding:10px 15px;border-radius:15px;font-size:14px;font-weight:700;border:2px solid #00d4ff;max-width:300px;z-index:10}
+        
+        .fullscreen-btn{position:absolute;bottom:15px;right:15px;background:#e50914;color:#fff;border:none;padding:12px 18px;border-radius:50%;font-size:1.4em;cursor:pointer;box-shadow:0 5px 15px rgba(229,9,20,.6);z-index:20;transition:.3s}
+        .fullscreen-btn:hover{background:#ff2d2d;transform:scale(1.1)}
+        
+        .section{max-width:1400px;margin:20px auto;padding:0 20px}
+        .section-title{text-align:center;margin:20px 0 15px;background:linear-gradient(90deg,#e50914,#00d4ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:2.2em;font-weight:700;text-shadow:2px 2px 10px #000;position:relative}
         .section-title::after{content:'';position:absolute;bottom:-15px;left:50%;transform:translateX(-50%);width:150px;height:5px;background:linear-gradient(90deg,#e50914,#00d4ff);border-radius:3px}
-        .channels-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px;padding:30px 0}
-        .channel-card{background:linear-gradient(145deg,#1f1f1f,#2f2f2f);border-radius:20px;padding:25px 20px;cursor:pointer;border:2px solid #3a3a3a;transition:all .4s;text-align:center;font-size:14px;font-weight:600;position:relative;overflow:hidden}
+        
+        .main-menu{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;padding:30px 0}
+        .menu-card{background:linear-gradient(145deg,#2a2a2a,#3a3a3a);border:3px solid #444;border-radius:20px;padding:30px;text-align:center;cursor:pointer;transition:all .4s;font-size:1.3em;font-weight:700;position:relative;overflow:hidden}
+        .menu-card::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent);transition:.6s}
+        .menu-card:hover{transform:translateY(-15px) scale(1.05);border-color:#e50914;background:linear-gradient(145deg,#e50914,#00d4ff);box-shadow:0 25px 50px rgba(229,9,20,.8)}
+        .menu-card:hover::before{left:100%}
+        .menu-icon{font-size:3em;margin-bottom:15px;display:block}
+        
+        .submenu{display:none;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;padding:20px;background:rgba(0,0,0,.95);border-radius:15px;margin-top:10px}
+        .submenu.active{display:grid}
+        
+        .channel-card{background:linear-gradient(145deg,#1f1f1f,#2f2f2f);border-radius:15px;padding:18px 15px;cursor:pointer;border:2px solid #3a3a3a;transition:all .4s;text-align:center;font-size:13px;font-weight:600;position:relative;overflow:hidden}
         .channel-card::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.3),transparent);transition:.6s}
-        .channel-card:hover{background:linear-gradient(145deg,#e50914,#00d4ff);transform:translateY(-10px) scale(1.03);border-color:#fff;box-shadow:0 25px 50px rgba(229,9,20,.8);color:#fff}
+        .channel-card:hover{background:linear-gradient(145deg,#e50914,#00d4ff);transform:translateY(-8px) scale(1.02);border-color:#fff;box-shadow:0 20px 40px rgba(229,9,20,.8);color:#fff}
         .channel-card:hover::before{left:100%}
-        .movie-icon{font-size:1.5em;margin-bottom:8px;display:block}
-        .platform-tag{position:absolute;top:8px;right:8px;font-size:10px;background:#00d4ff;color:#000;padding:4px 8px;border-radius:12px;font-weight:700}
-        a{text-decoration:none;color:inherit;display:block;height:100%}
-        .footer{background:#0c0c0c;padding:40px;text-align:center;border-top:4px solid #e50914;margin-top:60px}
-        @media(max-width:768px){.channels-grid{grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:15px}.now-playing{font-size:12px;max-width:250px}}
+        
+        .movie-icon{font-size:1.7em;margin-bottom:8px;display:block}
+        .platform-tag{position:absolute;top:8px;right:8px;font-size:9px;background:#00d4ff;color:#000;padding:3px 7px;border-radius:10px;font-weight:700}
+        
+        .footer{background:#0c0c0c;padding:40px;text-align:center;border-top:4px solid #e50914;margin-top:40px}
+        
+        .stats{display:flex;justify-content:center;gap:40px;margin:25px 0;flex-wrap:wrap}
+        .stat-item{text-align:center}
+        .stat-number{font-size:2.6em;font-weight:900;background:linear-gradient(90deg,#e50914,#00d4ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        
+        @media(max-width:768px){
+            .player-container{margin:15px auto}
+            .section-title{font-size:1.9em}
+            .main-menu{grid-template-columns:1fr}
+        }
     </style>
 </head>
 <body>
 
 <div class="header">
-    <h1 class="logo">📺 NIEL IPTV PRO</h1>
-    <p class="subtitle">🔴 Pluto TV + 🔵 Tubi + 🟣 Plex + 🟢 Esto TV • FILMES/SÉRIES EM CARTAZ AGORA!</p>
+    <h1 class="logo">📺 NIEL IPTV</h1>
+    <p class="subtitle">GRÁTIS • Filmes e Séries</p>
 </div>
 
 <div class="player-container">
     <iframe name="player" src="https://pluto.tv/" allowfullscreen></iframe>
     <div class="now-playing" id="nowPlaying">
-        🎬 Carregando programação ao vivo...
+        🎬 Carregando conteúdo...
+    </div>
+    <button class="fullscreen-btn" onclick="toggleFullscreen()" title="Tela Cheia">⛶</button>
+</div>
+
+<!-- 📊 ESTATÍSTICAS -->
+<div class="stats">
+    <div class="stat-item">
+        <div class="stat-number">NIEL</div>
+        <div>IPTV GRÁTIS</div>
+    </div>
+    <div class="stat-item">
+        <div class="stat-number">IPTV</div>
+        <div>FILMES</div>
+    </div>
+    <div class="stat-item">
+        <div class="stat-number">GRATIS</div>
+        <div>SÉRIES</div>
     </div>
 </div>
 
-<!-- 🔥 FILMES EM CARTAZ AGORA - PLUTO/TUBI/PLEX -->
+<!-- 🔥 MENU PRINCIPAL -->
 <div class="section">
-    <h2 class="section-title">🎥 FILMES EM CARTAZ AGORA (Clique e Assista!)</h2>
-    <div class="channels-grid">
-        <a href="https://pluto.tv/live-tv/pluto-movies" target="player">
-            <div class="channel-card">
-                <span class="platform-tag">Pluto</span>
-                <span class="movie-icon">🎬</span>
-                <strong>DEADPOOL</strong><br>
-                <small>Agora no Pluto Movies</small>
-            </div>
-        </a>
-        <a href="https://pluto.tv/live-tv/screamfest" target="player">
-            <div class="channel-card">
-                <span class="platform-tag">Pluto</span>
-                <span class="movie-icon">👻</span>
-                <strong>IT - A COISA</strong><br>
-                <small>ScreamFest AO VIVO</small>
-            </div>
-        </a>
-        <a href="https://pluto.tv/live-tv/action-movies" target="player">
-            <div class="channel-card">
-                <span class="platform-tag">Pluto</span>
-                <span class="movie-icon">💥</span>
-                <strong>VEL OZES 2</strong><br>
-                <small>Action Movies 24h</small>
-            </div>
-        </a>
-        <a href="https://tubitv.com/live-tv/movies" target="player">
-            <div class="channel-card">
-                <span class="platform-tag">Tubi</span>
-                <span class="movie-icon">🎞️</span>
-                <strong>John Wick 4</strong><br>
-                <small>Tubi Movies AO VIVO</small>
-            </div>
-        </a>
-        <a href="https://tubitv.com/live-tv/horror" target="player">
-            <div class="channel-card">
-                <span class="platform-tag">Tubi</span>
-                <span class="movie-icon">🧟</span>
-                <strong>Train to Busan</strong><br>
-                <small>Tubi Horror 24h</small>
-            </div>
-        </a>
-        <a href="https://watch.plex.tv/live-tv/movies" target="player">
-            <div class="channel-card">
-                <span class="platform-tag">Plex</span>
-                <span class="movie-icon">⭐</span>
-                <strong>Top Gun Maverick</strong><br>
-                <small>Plex Movies Live</small>
-            </div>
-        </a>
-    </div>
-</div>
+    <h2 class="section-title">🎮 ESCOLHA SUA CATEGORIA</h2>
+    <div class="main-menu">
+        
+        <!-- PLUTO TV -->
+        <div class="menu-card" onclick="toggleSubmenu('pluto-menu')">
+            <span class="menu-icon">🔴</span>
+            <strong>Pluto TV<br><small>Canais 24h</small></strong>
+        </div>
+        <div class="submenu" id="pluto-menu">
+            <a href="https://pluto.tv/live-tv/mtv" target="player"><div class="channel-card"><span class="platform-tag">Pluto</span><span class="live-tag">🔴LIVE</span>🔥 MTV</div></a>
+            <a href="https://pluto.tv/live-tv/comedy-central" target="player"><div class="channel-card"><span class="platform-tag">Pluto</span><span class="live-tag">🔴LIVE</span>😂 Comedy Central</div></a>
+            <a href="https://pluto.tv/live-tv/paramount-network" target="player"><div class="channel-card"><span class="platform-tag">Pluto</span><span class="live-tag">🔴LIVE</span>⭐ Paramount</div></a>
+            <a href="https://pluto.tv/live-tv/pluto-tv-movies" target="player"><div class="channel-card"><span class="platform-tag">Pluto</span><span class="live-tag">🔴LIVE</span>🎥 Pluto Movies</div></a>
+        </div>
 
-<!-- 📺 SÉRIES EM CARTAZ AGORA -->
-<div class="section">
-    <h2 class="section-title">📺 SÉRIES CLÁSSICAS EM CARTAZ (24h)</h2>
-    <div class="channels-grid">
-        <a href="https://pluto.tv/live-tv/series-classics" target="player">
-            <div class="channel-card">
-                <span class="platform-tag">Pluto</span>
-                <span class="movie-icon">📺</span>
-                <strong>FRIENDS</strong><br>
-                <small>Series Classics</small>
-            </div>
-        </a>
-        <a href="https://pluto.tv/live-tv/sitcoms" target="player">
-            <div class="channel-card">
-                <span class="platform-tag">Pluto</span>
-                <span class="movie-icon">😂</span>
-                <strong>THE OFFICE</strong><br>
-                <small>Sitcoms 24h</small>
-            </div>
-        </a>
-        <a href="https://pluto.tv/live-tv/80s-series" target="player">
-            <div class="channel-card">
-                <span class="platform-tag">Pluto</span>
-                <span class="movie-icon">📼</span>
-                <strong>MIAMI VICE</strong><br>
-                <small>Anos 80 AO VIVO</small>
-            </div>
-        </a>
-    </div>
-</div>
+        <!-- 🎬 FILMES -->
+        <div class="menu-card" onclick="toggleSubmenu('movies-menu')">
+            <span class="menu-icon">🎥</span>
+            <strong>Filmes</strong>
+        </div>
+        <div class="submenu" id="movies-menu">
+            <a href="https://pluto.tv/live-tv/pluto-movies" target="player"><div class="channel-card"><span class="platform-tag">Pluto</span><span class="movie-icon">🎬</span><strong>Pluto Movies 24h</strong></div></a>
+            <a href="https://pluto.tv/live-tv/action-movies" target="player"><div class="channel-card"><span class="platform-tag">Pluto</span><span class="movie-icon">💥</span><strong>Action Movies</strong></div></a>
+            <a href="https://pluto.tv/live-tv/scifi-movies" target="player"><div class="channel-card"><span class="platform-tag">Pluto</span><span class="movie-icon">🚀</span><strong>Sci-Fi Movies</strong></div></a>
+            <a href="https://pluto.tv/live-tv/screamfest" target="player"><div class="channel-card"><span class="platform-tag">Pluto</span><span class="movie-icon">👻</span><strong>Horror Movies</strong></div></a>
+            <a href="https://pluto.tv/live-tv/comedy-movies" target="player"><div class="channel-card"><span class="platform-tag">Pluto</span><span class="movie-icon">😂</span><strong>Comedy Movies</strong></div></a>
+            <a href="https://pluto.tv/live-tv/war-movies" target="player"><div class="channel-card"><span class="platform-tag">Pluto</span><span class="movie-icon">⚔️</span><strong>War Movies</strong></div></a>
+            <a href="https://30a-tv.com/feeds/pzaz/30atvmovies.m3u8" target="player"><div class="channel-card"><span class="platform-tag">30A</span><span class="movie-icon">🎥</span><strong>30A Classic Movies</strong></div></a>
+            <a href="https://jmp2.uk/plu-5f4d878d3d19b30007d2e782.m3u8" target="player"><div class="channel-card"><span class="platform-tag">70s</span><span class="movie-icon">📼</span><strong>70s Cinema</strong></div></a>
+            <a href="https://jmp2.uk/plu-5ca525b650be2571e3943c63.m3u8" target="player"><div class="channel-card"><span class="platform-tag">80s</span><span class="movie-icon">📼</span><strong>80s Rewind</strong></div></a>
+            <a href="https://jmp2.uk/plu-5f4d86f519358a00072b978e.m3u8" target="player"><div class="channel-card"><span class="platform-tag">90s</span><span class="movie-icon">🔥</span><strong>90s Throwback</strong></div></a>
+            <a href="http://103.72.101.252:8080/live/1322.m3u8" target="player"><div class="channel-card"><span class="platform-tag">Flix</span><span class="movie-icon">🎬</span><strong>&flix HD</strong></div></a>
+            <a href="http://103.72.101.252:8080/live/185.m3u8" target="player"><div class="channel-card"><span class="platform-tag">Pics</span><span class="movie-icon">🖼️</span><strong>&pictures HD</strong></div></a>
+            <a href="https://mediaserver.abnvideos.com/streams/abnbiblemovies.m3u8" target="player"><div class="channel-card"><span class="platform-tag">ABN</span><span class="movie-icon">📖</span><strong>ABN Bible Movies</strong></div></a>
+            <a href="http://57.129.53.130:21001/ABZY_Movies/master.m3u8" target="player"><div class="channel-card"><span class="platform-tag">Abzy</span><span class="movie-icon">🎥</span><strong>Abzy Movies</strong></div></a>
+            <a href="https://jmp2.uk/plu-61b790b985706b00072cb797.m3u8" target="player"><div class="channel-card"><span class="platform-tag">Action</span><span class="movie-icon">💣</span><strong>Adrenalina Pura</strong></div></a>
+            <a href="http://actionlive.siliconweb.com/actionabr/actiontv/playlist.m3u8" target="player"><div class="channel-card"><span class="platform-tag">Action</span><span class="movie-icon">⚡</span><strong>Action 24</strong></div></a>
+            <a href="https://live.relentlessinnovations.net:1936/afghannobel/afghannobel/playlist.m3u8" target="player"><div class="channel-card"><span class="platform-tag">Afghan</span><span class="movie-icon">🎬</span><strong>Afghan Nobel Movies</strong></div></a>
+            <a href="https://shd-amg-fast.edgenextcdn.net/tx001/playlist.m3u8" target="player"><div class="channel-card"><span class="platform-tag">Aflam</span><span class="movie-icon">🎥</span><strong>Aflam Movies</strong></div></a>
+            <a href="https://pluto.tv/live-tv/70s-cinema" target="player"><div class="channel-card"><span class="platform-tag">Pluto</span><span class="movie-icon">📼</span><strong>70s Cinema</strong></div></a>
+            <a href="https://pluto.tv/live-tv/80s-rewind" target="player"><div class="channel-card"><span class="platform-tag">Pluto</span><span class="movie-icon">📼</span><strong>80s Rewind</strong></div></a>
+        </div>
 
-<!-- 🏆 CANAIS DE TV AO VIVO -->
-<div class="section">
-    <h2 class="section-title">🏆 CANAIS TV AO VIVO - Pluto/Tubi/Plex/Esto</h2>
-    <div class="channels-grid">
-        <a href="https://pluto.tv/live-tv/mtv" target="player"><div class="channel-card"><span class="platform-tag">Pluto</span>🔥 MTV</div></a>
-        <a href="https://pluto.tv/live-tv/comedy-central" target="player"><div class="channel-card"><span class="platform-tag">Pluto</span>😂 Comedy Central</div></a>
-        <a href="https://pluto.tv/live-tv/paramount-network" target="player"><div class="channel-card"><span class="platform-tag">Pluto</span>⭐ Paramount</div></a>
-        <a href="https://tubitv.com/live-tv/movies" target="player"><div class="channel-card"><span class="platform-tag">Tubi</span>🎬 Tubi Movies</div></a>
-        <a href="https://watch.plex.tv/live-tv/channels" target="player"><div class="channel-card"><span class="platform-tag">Plex</span>📺 Plex Live</div></a>
-        <a href="https://estotv.com/live" target="player"><div class="channel-card"><span class="platform-tag">Esto</span>🇲🇽 Esto TV</div></a>
-    </div>
-</div>
+        <!-- 📺 SÉRIES -->
+        <div class="menu-card" onclick="toggleSubmenu('series-menu')">
+            <span class="menu-icon">📺</span>
+            <strong>Séries</strong>
+        </div>
+        <div class="submenu" id="series-menu">
+            <a href="https://pluto.tv/live-tv/series-classics" target="player"><div class="channel-card"><span class="platform-tag">Pluto</span><span class="movie-icon">📺</span><strong>Séries Clássicas</strong></div></a>
+            <a href="https://pluto.tv/live-tv/sitcoms" target="player"><div class="channel-card"><span class="platform-tag">Pluto</span><span class="movie-icon">😂</span><strong>Sitcoms</strong></div></a>
+            <a href="https://pluto.tv/live-tv/80s-series" target="player"><div class="channel-card"><span class="platform-tag">Pluto</span><span class="movie-icon">📼</span><strong>Séries Anos 80</strong></div></a>
+            <a href="https://pluto.tv/live-tv/crime-series" target="player"><div class="channel-card"><span class="platform-tag">Pluto</span><span class="movie-icon">🔍</span><strong>Crime Series</strong></div></a>
+            <a href="https://afrafhls.wns.live/hls/stream.m3u8" target="player"><div class="channel-card"><span class="platform-tag">Afra</span><span class="movie-icon">🎞️</span><strong>Afra Film</strong></div></a>
+            <a href="https://streamdot.broadpeak.io/cff02a74da64d145c102a2d012758398/afxpstr/AfriwoodBlockbuster/index.m3u8" target="player"><div class="channel-card"><span class="platform-tag">Afriwood</span><span class="movie-icon">🌍</span><strong>Afriwood Blockbuster</strong></div></a>
+            <a href="https://livetv.tarangplus.in/alankar-origin/live/playlist.m3u8" target="player"><div class="channel-card"><span class="platform-tag">Alankar</span><span class="movie-icon">📺</span><strong>Alankar TV</strong></div></a>
+            <a href="https://dqi7ayt2o24fn.cloudfront.net/playlist.m3u8" target="player"><div class="channel-card"><span class="platform-tag">DUST</span><span class="movie-icon">👽</span><strong>Alien Nation</strong></div></a>
+            <a href="https://mumt03.tangotv.in/ALLTIMEMOVIES/index.m3u8" target="player"><div class="channel-card"><span class="platform-tag">AllTime</span><span class="movie-icon">🎥</span><strong>All Time Movies</strong></div></a>
+            <a href="http://201.217.246.42:44310/Live/3fcb6e26785fd8d415571b26dc3cf5d3/local-76.playlist.m3u8" target="player"><div class="channel-card"><span class="platform-tag">AMC</span><span class="movie-icon">📺</span><strong>AMC Latin America</strong></div></a>
+            <a href="http://31.148.48.15/Amedia_HIT_HD/index.m3u8" target="player"><div class="channel-card"><span class="platform-tag">Amedia</span><span class="movie-icon">🔥</span><strong>Amedia Hit</strong></div></a>
+            <a href="http://31.148.48.15/Amedia_Premium_HD/index.m3u8" target="player"><div class="channel-card"><span class="platform-tag">Amedia</span><span class="movie-icon">⭐</span><strong>Amedia Premium</strong></div></a>
+            <a href="http://107.167.7.162:8081/playlist/amhor/playlist.m3u8" target="player"><div class="channel-card"><span class="platform-tag">Horror</span><span class="movie-icon">🩸</span><strong>American Horrors</strong></div></a>
+            <a href="https://amogonetworx-artflix-1-nl.samsung.wurl.tv/playlist.m3u8" target="player"><div class="channel-card"><span class="platform-tag">Artflix</span><span class="movie-icon">🖼️</span><strong>Artflix Classics</strong></div></a>
+            <a href="http://181.114.57.246:4000/play/KgkA9tT2SpLYm86J/index.m3u8" target="player"><div class="channel-card"><span class="platform-tag">Atres</span><span class="movie-icon">🎥</span><strong>Atrescine</strong></div></a>
+            <a href="https://cdn.streamhispanatv.net:3417/live/auroramflive.m3u8" target="player"><div class="channel-card"><span class="platform-tag">Aurora</span><span class="movie-icon">🌟</span><strong>Aurora Media Films</strong></div></a>
+            <a href="http://103.58.160.157:8278/720-AXN/playlist.m3u8" target="player"><div class="channel-card"><span class="platform-tag">AXN</span><span class="movie-icon">🔪</span><strong>AXN Asia</strong></div></a>
+            <a href="http://201.217.246.42:44310/Live/3fcb6e26785fd8d415571b26dc3cf5d3/local-77.playlist.m3u8" target="player"><div class="channel-card"><span class="platform-tag">AXN</span><span class="movie-icon">🌎</span><strong>AXN Latin America</strong></div></a>
+            <a href="https://cdnb4u.wiseplayout.com/B4U_Bhojpuri/master.m3u8" target="player"><div class="channel-card"><span class="platform-tag">B4U</span><span class="movie-icon">🇮🇳</span><strong>B4U Bhojpuri</strong></div></a>
+            <a href="https://pluto.tv/live-tv/drama-series" target="player"><div class="channel-card"><span class="platform-tag">Pluto</span><span class="movie-icon">🎭</span><strong>Drama Series</strong></div></a>
+        </div>
 
-<!-- ⚽ ESPORTES AO VIVO -->
-<div class="section">
-    <h2 class="section-title">⚽ ESPORTES AO VIVO 24h</h2>
-    <div class="channels-grid">
-        <a href="https://pluto.tv/live-tv/sports-grid" target="player"><div class="channel-card"><span class="platform-tag">Pluto</span>⚽ Sports Grid</div></a>
-        <a href="https://pluto.tv/live-tv/fight-network" target="player"><div class="channel-card"><span class="platform-tag">Pluto</span>🥊 Fight Network</div></a>
-        <a href="https://pluto.tv/live-tv/racing-channel" target="player"><div class="channel-card"><span class="platform-tag">Pluto</span>🏎️ Racing</div></a>
-    </div>
-</div>
-
-<!-- 👶 INFANTIL -->
-<div class="section">
-    <h2 class="section-title">👶 CANAIS INFANTIL</h2>
-    <div class="channels-grid">
-        <a href="https://pluto.tv/live-tv/nick-jr" target="player"><div class="channel-card"><span class="platform-tag">Pluto</span>👶 Nick Jr</div></a>
-        <a href="https://pluto.tv/live-tv/pbs-kids" target="player"><div class="channel-card"><span class="platform-tag">Pluto</span>📚 PBS Kids</div></a>
     </div>
 </div>
 
 <div class="footer">
-    <h3>✅ NIEL IPTV PRO - 500+ CANAIS GRÁTIS</h3>
-    <p>🎬 Filmes/Séries em Cartaz • 📺 TV Ao Vivo 24h • Pluto/Tubi/Plex/Esto TV</p>
+    <p>📺 NIEL IPTV GRÁTIS - Entretenimento sem custo • Todos os direitos reservados</p>
 </div>
 
 <script>
-    // Simula programação ao vivo (atualiza a cada 30s)
-    const moviesNow = [
-        "🎬 DEADPOOL (Pluto Movies)",
-        "👻 IT - A COISA (ScreamFest)", 
-        "💥 VELOZES & FURIOSOS (Action)",
-        "⭐ JOHN WICK 4 (Tubi Movies)",
-        "🧟 TRAIN TO BUSAN (Tubi Horror)"
-    ];
+function toggleSubmenu(id) {
+    const submenu = document.getElementById(id);
+    submenu.classList.toggle('active');
     
-    function updateNowPlaying() {
-        const randomMovie = moviesNow[Math.floor(Math.random() * moviesNow.length)];
-        document.getElementById('nowPlaying').textContent = randomMovie;
+    document.querySelectorAll('.submenu').forEach(s => {
+        if (s.id !== id) s.classList.remove('active');
+    });
+}
+
+function toggleFullscreen() {
+    const iframe = document.querySelector('iframe');
+    if (!document.fullscreenElement) {
+        if (iframe.requestFullscreen) iframe.requestFullscreen();
+        else if (iframe.webkitRequestFullscreen) iframe.webkitRequestFullscreen();
+        else if (iframe.msRequestFullscreen) iframe.msRequestFullscreen();
+    } else {
+        document.exitFullscreen();
     }
-    
-    // Atualiza a cada 30 segundos
-    setInterval(updateNowPlaying, 30000);
-    updateNowPlaying(); // Primeira execução
+}
+
+document.addEventListener('click', function(e) {
+    if (!e.target.closest('.menu-card') && !e.target.closest('.submenu')) {
+        document.querySelectorAll('.submenu').forEach(s => s.classList.remove('active'));
+    }
+});
 </script>
 
 </body>
-          </html>
+                </html>
