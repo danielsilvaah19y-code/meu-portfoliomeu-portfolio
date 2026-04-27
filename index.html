@@ -37,7 +37,7 @@
         .menu-icon{font-size:3em;margin-bottom:15px;display:block}
         
         .submenu{display:none;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;padding:20px;background:rgba(0,0,0,.95);border-radius:15px;margin-top:10px}
-        .submenu.active{display:grid}
+        .submenu.active{display:grid !important}
         
         .channel-card{background:linear-gradient(145deg,#1f1f1f,#2f2f2f);border-radius:15px;padding:18px 15px;cursor:pointer;border:2px solid #3a3a3a;transition:all .4s;text-align:center;font-size:13px;font-weight:600;position:relative;overflow:hidden}
         .channel-card::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.3),transparent);transition:.6s}
@@ -99,7 +99,7 @@
         <!-- PLUTO TV -->
         <div class="menu-card" onclick="toggleSubmenu('pluto-menu')">
             <span class="menu-icon">🔴</span>
-            <strong>Pluto TV<br><small>Canais 24h</small></strong>
+            <strong>Pluto TV</strong>
         </div>
         <div class="submenu" id="pluto-menu">
             <a href="https://pluto.tv/live-tv/mtv" target="player"><div class="channel-card"><span class="platform-tag">Pluto</span><span class="live-tag">🔴LIVE</span>🔥 MTV</div></a>
@@ -114,10 +114,16 @@
             <strong>Filmes</strong>
         </div>
         <div class="submenu" id="movies-menu">
-            <!-- seus 20 cards de filmes aqui (mesmo de antes) -->
             <a href="https://pluto.tv/live-tv/pluto-movies" target="player"><div class="channel-card"><span class="platform-tag">Pluto</span><span class="movie-icon">🎬</span><strong>Pluto Movies 24h</strong></div></a>
             <a href="https://pluto.tv/live-tv/action-movies" target="player"><div class="channel-card"><span class="platform-tag">Pluto</span><span class="movie-icon">💥</span><strong>Action Movies</strong></div></a>
-            <!-- ... os outros 18 cards de filmes que você já tinha ... -->
+            <a href="https://pluto.tv/live-tv/scifi-movies" target="player"><div class="channel-card"><span class="platform-tag">Pluto</span><span class="movie-icon">🚀</span><strong>Sci-Fi Movies</strong></div></a>
+            <a href="https://pluto.tv/live-tv/screamfest" target="player"><div class="channel-card"><span class="platform-tag">Pluto</span><span class="movie-icon">👻</span><strong>Horror Movies</strong></div></a>
+            <a href="https://pluto.tv/live-tv/comedy-movies" target="player"><div class="channel-card"><span class="platform-tag">Pluto</span><span class="movie-icon">😂</span><strong>Comedy Movies</strong></div></a>
+            <a href="https://pluto.tv/live-tv/war-movies" target="player"><div class="channel-card"><span class="platform-tag">Pluto</span><span class="movie-icon">⚔️</span><strong>War Movies</strong></div></a>
+            <a href="https://30a-tv.com/feeds/pzaz/30atvmovies.m3u8" target="player"><div class="channel-card"><span class="platform-tag">30A</span><span class="movie-icon">🎥</span><strong>30A Classic Movies</strong></div></a>
+            <a href="https://jmp2.uk/plu-5f4d878d3d19b30007d2e782.m3u8" target="player"><div class="channel-card"><span class="platform-tag">70s</span><span class="movie-icon">📼</span><strong>70s Cinema</strong></div></a>
+            <a href="https://jmp2.uk/plu-5ca525b650be2571e3943c63.m3u8" target="player"><div class="channel-card"><span class="platform-tag">80s</span><span class="movie-icon">📼</span><strong>80s Rewind</strong></div></a>
+            <a href="https://jmp2.uk/plu-5f4d86f519358a00072b978e.m3u8" target="player"><div class="channel-card"><span class="platform-tag">90s</span><span class="movie-icon">🔥</span><strong>90s Throwback</strong></div></a>
         </div>
 
         <!-- SÉRIES -->
@@ -126,9 +132,10 @@
             <strong>Séries</strong>
         </div>
         <div class="submenu" id="series-menu">
-            <!-- seus 20 cards de séries aqui (mesmo de antes) -->
             <a href="https://pluto.tv/live-tv/series-classics" target="player"><div class="channel-card"><span class="platform-tag">Pluto</span><span class="movie-icon">📺</span><strong>Séries Clássicas</strong></div></a>
-            <!-- ... os outros 19 cards de séries ... -->
+            <a href="https://pluto.tv/live-tv/sitcoms" target="player"><div class="channel-card"><span class="platform-tag">Pluto</span><span class="movie-icon">😂</span><strong>Sitcoms</strong></div></a>
+            <a href="https://pluto.tv/live-tv/80s-series" target="player"><div class="channel-card"><span class="platform-tag">Pluto</span><span class="movie-icon">📼</span><strong>Séries Anos 80</strong></div></a>
+            <a href="https://pluto.tv/live-tv/crime-series" target="player"><div class="channel-card"><span class="platform-tag">Pluto</span><span class="movie-icon">🔍</span><strong>Crime Series</strong></div></a>
         </div>
 
     </div>
@@ -141,43 +148,29 @@
 <script>
 function toggleSubmenu(id) {
     const submenu = document.getElementById(id);
-    submenu.classList.toggle('active');
+    
+    // Fecha todos os outros submenus primeiro
     document.querySelectorAll('.submenu').forEach(s => {
         if (s.id !== id) s.classList.remove('active');
     });
+    
+    // Alterna o submenu clicado
+    submenu.classList.toggle('active');
 }
 
 async function enterFullscreen() {
     const iframe = document.querySelector('iframe');
     try {
-        // Entra em tela cheia
-        if (iframe.requestFullscreen) {
-            await iframe.requestFullscreen();
-        } else if (iframe.webkitRequestFullscreen) {
-            await iframe.webkitRequestFullscreen();
-        } else if (iframe.msRequestFullscreen) {
-            await iframe.msRequestFullscreen();
-        }
-
-        // Tenta forçar modo paisagem (funciona melhor no Android)
+        if (iframe.requestFullscreen) await iframe.requestFullscreen();
+        else if (iframe.webkitRequestFullscreen) await iframe.webkitRequestFullscreen();
+        
         if (screen.orientation && screen.orientation.lock) {
-            try {
-                await screen.orientation.lock("landscape");
-            } catch (e) {
-                console.log("Não foi possível travar em paisagem automaticamente");
-            }
+            await screen.orientation.lock("landscape").catch(() => {});
         }
     } catch (err) {
-        console.log("Erro ao entrar em tela cheia:", err);
+        console.log("Erro ao entrar em tela cheia");
     }
 }
-
-// Libera a orientação quando sair da tela cheia
-document.addEventListener('fullscreenchange', () => {
-    if (!document.fullscreenElement && screen.orientation && screen.orientation.unlock) {
-        screen.orientation.unlock();
-    }
-});
 
 document.addEventListener('click', function(e) {
     if (!e.target.closest('.menu-card') && !e.target.closest('.submenu')) {
@@ -187,4 +180,4 @@ document.addEventListener('click', function(e) {
 </script>
 
 </body>
-  </html>
+                                                                                                                                                 </html>
