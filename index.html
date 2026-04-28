@@ -3,54 +3,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Desenvolvedor Web | [Daniel]</title>
+    <title>Daniel | Desenvolvedor Web Mobile</title>
+    <!-- Favicon para parecer profissional no navegador -->
+    <link rel="icon" href="https://flaticon.com">
+    
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; text-decoration: none; }
-        body { background: #050505; color: white; display: flex; flex-direction: column; align-items: center; padding: 50px 20px; }
+        /* RESET E CORES */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; text-decoration: none; }
         
-        .badge { background: #e50914; padding: 5px 15px; border-radius: 20px; font-size: 12px; font-weight: bold; margin-bottom: 10px; }
-        h1 { font-size: 2.2em; text-align: center; margin-bottom: 10px; }
-        .subtitle { color: #aaa; text-align: center; margin-bottom: 40px; max-width: 300px; }
+        body { 
+            background: #0a0a0c; 
+            color: #ffffff; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            padding: 60px 20px;
+            min-height: 100vh;
+        }
 
-        .services-grid { width: 100%; max-width: 400px; }
+        /* CABEÇALHO */
+        .badge { 
+            background: rgba(0, 136, 204, 0.2); 
+            color: #0088cc; 
+            padding: 6px 16px; 
+            border-radius: 20px; 
+            font-size: 13px; 
+            font-weight: bold; 
+            margin-bottom: 20px;
+            border: 1px solid #0088cc;
+        }
+
+        h1 { font-size: 2.5em; text-align: center; margin-bottom: 10px; letter-spacing: -1px; }
+        h1 span { color: #0088cc; }
+        
+        .subtitle { 
+            color: #999; 
+            text-align: center; 
+            margin-bottom: 40px; 
+            max-width: 350px; 
+            line-height: 1.5;
+        }
+
+        /* GRID DE SERVIÇOS */
+        .services-grid { width: 100%; max-width: 450px; }
+        
         .card { 
-            background: #111; border: 1px solid #222; padding: 20px; 
-            border-radius: 15px; margin-bottom: 20px; transition: 0.3s;
-            display: block; color: white;
+            background: #16161a; 
+            border: 1px solid #252529; 
+            padding: 25px; 
+            border-radius: 18px; 
+            margin-bottom: 15px; 
+            transition: all 0.3s ease;
+            display: block;
         }
-        .card:hover { border-color: #e50914; transform: translateY(-5px); }
-        .card h3 { color: #e50914; margin-bottom: 5px; }
-        .card p { font-size: 14px; color: #888; }
+        
+        .card:hover { 
+            border-color: #0088cc; 
+            transform: translateY(-5px);
+            background: #1c1c22;
+        }
 
-        .btn-whatsapp { 
-            background: #25d366; color: white; padding: 15px 30px; 
-            border-radius: 50px; font-weight: bold; margin-top: 20px;
-            box-shadow: 0 10px 20px rgba(37, 211, 102, 0.2);
+        .card h3 { color: #fff; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
+        .card p { font-size: 14px; color: #888; line-height: 1.4; }
+
+        /* BOTÃO TELEGRAM */
+        .btn-telegram { 
+            background: #0088cc; 
+            color: white; 
+            padding: 18px 35px; 
+            border-radius: 50px; 
+            font-weight: bold; 
+            margin-top: 30px;
+            box-shadow: 0 10px 25px rgba(0, 136, 204, 0.3);
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 16px;
         }
+
+        .btn-telegram:hover {
+            background: #00a2f3;
+            transform: scale(1.05);
+            box-shadow: 0 15px 30px rgba(0, 136, 204, 0.5);
+        }
+
+        .footer { margin-top: auto; padding-top: 50px; color: #444; font-size: 12px; }
     </style>
 </head>
 <body>
 
-    <div class="badge">DISPONÍVEL PARA PROJETOS</div>
-    <h1>Olá, eu sou [Seu Nome]</h1>
-    <p class="subtitle">Desenvolvedor Web Mobile. Crio sites leves, rápidos e profissionais direto do meu Android.</p>
+    <div class="badge">● DISPONÍVEL PARA NOVOS PROJETOS</div>
+    
+    <h1>Olá, eu sou o <span>Daniel</span></h1>
+    <p class="subtitle">Desenvolvedor Front-end especializado em criar sites profissionais e rápidos usando tecnologia mobile.</p>
 
     <div class="services-grid">
         <div class="card">
             <h3>🚀 Landing Pages</h3>
-            <p>Páginas de alta velocidade para vendas e captura de clientes.</p>
+            <p>Páginas de alta performance criadas para vender seus serviços ou produtos na internet.</p>
         </div>
+        
         <div class="card">
-            <h3>🔗 Links para Bio</h3>
-            <p>Substitua o Linktree por algo único e profissional no seu Instagram.</p>
+            <h3>🔗 Bio Links Premium</h3>
+            <p>Um link único para o seu Instagram que centraliza seus contatos de forma profissional.</p>
         </div>
+
         <div class="card">
-            <h3>🛠️ Manutenção</h3>
-            <p>Ajustes, melhorias e suporte para sites já existentes.</p>
+            <h3>📱 Desenvolvimento Mobile</h3>
+            <p>Sites totalmente otimizados para smartphones, garantindo a melhor experiência ao cliente.</p>
         </div>
     </div>
 
-    <a href="https://wa.me[SEU_NUMERO_AQUI]" class="btn-whatsapp">ME CONTRATAR NO WHATSAPP</a>
+    <!-- SEU LINK DO TELEGRAM CONFIGURADO -->
+    <a href="https://t.me" target="_blank" class="btn-telegram">
+        FALAR COM DANIEL NO TELEGRAM
+    </a>
+
+    <div class="footer">
+        © 2024 Daniel Dev • Desenvolvido via Android 11
+    </div>
 
 </body>
 </html>
